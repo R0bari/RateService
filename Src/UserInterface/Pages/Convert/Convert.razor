@@ -7,49 +7,50 @@
 
 @inject CurrenciesService currenciesService;
 
-<div class="component-header">
-    <h1>@title</h1>
-</div>
+<div class="component-wrapper">
+    <div class="component-header">
+        <h1>@title</h1>
+    </div>
 
-<div class="convert-block">
-    <EditForm class="form" Model="model">
-        <div class="convert-input">
-            <RadzenNumeric ShowUpDown="false" TValue="decimal" @bind-Value=@leftValue Placeholder="Enter value" />
-            <RadzenDropDown TValue="CurrencyCodesEnum" Data=@currencyCodes @bind-Value=@leftCode AllowClear="false" />
-        </div>
-
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-left-right" viewBox="0 0 16 16">
-            <path fill-rule="evenodd" d="M1 11.5a.5.5 0 0 0 .5.5h11.793l-3.147 3.146a.5.5 0 0 0 .708.708l4-4a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 11H1.5a.5.5 0 0 0-.5.5zm14-7a.5.5 0 0 1-.5.5H2.707l3.147 3.146a.5.5 0 1 1-.708.708l-4-4a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 4H14.5a.5.5 0 0 1 .5.5z" />
-        </svg>
-
-        <div class="convert-input">
-            <RadzenNumeric ShowUpDown="false" TValue="decimal" @bind-Value=@rightValue Placeholder="Enter value" />
-            <RadzenDropDown TValue="CurrencyCodesEnum" Data=@currencyCodes @bind-Value=@rightCode AllowClear="false" />
-        </div>
-    </EditForm>
-</div>
-
-<RadzenChart>
-    <RadzenLineSeries Smooth="true" Data="@ratesForChartLine" CategoryProperty="Date" Title="@model.LeftCode.ToString()" LineType="LineType.Solid" ValueProperty="Value">
-        <TooltipTemplate Context="data">
-            <div>
-                <span>@data.Date.ToShortDateString()</span><br />
-                <strong>@model.LeftCode : @data.Value.ToString("N2") @model.RightCode</strong>
+    <div class="convert-block">
+        <EditForm class="form" Model="model">
+            <div class="convert-input">
+                <RadzenNumeric ShowUpDown="false" TValue="decimal" @bind-Value=@leftValue Placeholder="Enter value" />
+                <RadzenDropDown TValue="CurrencyCodesEnum" Data=@currencyCodes @bind-Value=@leftCode AllowClear="false" />
             </div>
-        </TooltipTemplate>
-    </RadzenLineSeries>
-    <RadzenValueAxis>
-        <RadzenGridLines Visible="true" />
-    </RadzenValueAxis>
-    <RadzenCategoryAxis>
-        <RadzenGridLines Visible="true" />
-    </RadzenCategoryAxis>
-    <RadzenLegend Visible="false" />
-</RadzenChart>
+
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-arrow-left-right" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M1 11.5a.5.5 0 0 0 .5.5h11.793l-3.147 3.146a.5.5 0 0 0 .708.708l4-4a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 11H1.5a.5.5 0 0 0-.5.5zm14-7a.5.5 0 0 1-.5.5H2.707l3.147 3.146a.5.5 0 1 1-.708.708l-4-4a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 4H14.5a.5.5 0 0 1 .5.5z" />
+            </svg>
+
+            <div class="convert-input">
+                <RadzenNumeric ShowUpDown="false" TValue="decimal" @bind-Value=@rightValue Placeholder="Enter value" />
+                <RadzenDropDown TValue="CurrencyCodesEnum" Data=@currencyCodes @bind-Value=@rightCode AllowClear="false" />
+            </div>
+        </EditForm>
+    </div>
+
+    <RadzenChart>
+        <RadzenLineSeries Smooth="true" Data="@ratesForChartLine" CategoryProperty="Date" Title="@model.LeftCode.ToString()" LineType="LineType.Solid" ValueProperty="Value">
+            <TooltipTemplate Context="data">
+                <div>
+                    <span>@data.Date.ToShortDateString()</span><br />
+                    <strong>@model.LeftCode : @data.Value.ToString("N2") @model.RightCode</strong>
+                </div>
+            </TooltipTemplate>
+        </RadzenLineSeries>
+        <RadzenValueAxis>
+            <RadzenGridLines Visible="true" />
+        </RadzenValueAxis>
+        <RadzenCategoryAxis>
+            <RadzenGridLines Visible="true" />
+        </RadzenCategoryAxis>
+        <RadzenLegend Visible="false" />
+    </RadzenChart>
+</div>
+
 
 @code {
-    [Parameter]
-    public string TestParam { get; set; } = "not promoted";
     private CurrencyCodesEnum leftCode
     {
         get => model.LeftCode;

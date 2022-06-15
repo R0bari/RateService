@@ -1,5 +1,6 @@
 ﻿using Domain.Models.Rates;
 using Domain.Models.Rates.Enums;
+using UserInterface.Infrastructure;
 
 namespace UserInterface.Pages.Convert
 {
@@ -14,7 +15,7 @@ namespace UserInterface.Pages.Convert
             set
             {
                 _leftCode = value;
-                _rightValue = CalculateRightValue();
+                _rightValue = CalculateRightValue().ToFixed(3);
             }
         }
 
@@ -24,8 +25,8 @@ namespace UserInterface.Pages.Convert
             get => _leftValue;
             set
             {
-                _leftValue = value;
-                _rightValue = CalculateRightValue();
+                _leftValue = value.ToFixed(3);
+                _rightValue = CalculateRightValue().ToFixed(3);
             }
         }
 
@@ -36,7 +37,7 @@ namespace UserInterface.Pages.Convert
             set
             {
                 _rightCode = value;
-                _leftValue = CalculateLeftValue();
+                _leftValue = CalculateLeftValue().ToFixed(3);
             }
         }
 
@@ -46,8 +47,8 @@ namespace UserInterface.Pages.Convert
             get => _rightValue;
             set
             {
-                _rightValue = value;
-                _leftValue = CalculateLeftValue();
+                _rightValue = value.ToFixed(3);
+                _leftValue = CalculateLeftValue().ToFixed(3);
             }
         }
 
