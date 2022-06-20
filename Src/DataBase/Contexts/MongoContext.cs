@@ -8,27 +8,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Mapster;
-using MongoDB.Bson;
 using MongoDB.Driver;
-using MongoDB.Driver.GridFS;
-using System.Threading;
+using System.Configuration;
 
 namespace DataBase.Contexts;
 
 public class MongoContext : IContext
 {
-    private readonly IGridFSBucket _gridFs;
     private readonly IMongoCollection<RateForDateMongo> _ratesForDate;
 
-    private const string ConnectionString =
-        "mongodb://localhost:27017/CurrencyView?readPreference=primary&appname=MongoDB%20Compass&directConnection=true&ssl=false";
+    private readonly string _connectionString;
 
     public MongoContext()
     {
-        var connection = new MongoUrlBuilder(ConnectionString);
-        var client = new MongoClient(ConnectionString);
+        _connectionString = ConfigurationManager.AppSettings["MongoConnectionString"] ?? "";
+        var connection = new MongoUrlBuilder(_connectionString);
+        var client = new MongoClient(_connectionString);
         var database = client.GetDatabase(connection.DatabaseName);
-        _gridFs = new GridFSBucket(database);
         _ratesForDate = database.GetCollection<RateForDateMongo>("RatesForDate");
     }
 
